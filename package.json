@@ -1,0 +1,29 @@
+{
+  "name": "@guivic/fastify-bull",
+  "version": "0.0.1",
+  "description": "Fastify plugin to use easily Bull.",
+  "main": "index.js",
+  "repository": "git@github.com:guivic/fastify-bull.git",
+  "author": "lludol <ludovic.lerus@guivic.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "@guivic/eslint-config-guivic": "^0.2.0",
+    "bull": "^3.9.1",
+    "eslint": "^5.16.0",
+    "fastify": "^2.3.0",
+    "tap": "^13.1.0"
+  },
+  "dependencies": {
+    "fast-glob": "^2.2.7",
+    "fastify-plugin": "^1.5.0",
+    "ioredis": "^4.9.5"
+  },
+  "keywords": [
+    "guivic",
+    "fastify",
+    "bull"
+  ],
+  "peerDependencies": {
+    "bull": "^3.9.1"
+  }
+}

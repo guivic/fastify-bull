@@ -1,0 +1,3 @@
+{
+	"extends": "@guivic/eslint-config-guivic"
+}
