@@ -11,7 +11,7 @@
     "bull": "^3.9.1",
     "eslint": "^5.16.0",
     "fastify": "^2.3.0",
-    "tap": "^13.1.0"
+    "tap": "^14.2.0"
   },
   "dependencies": {
     "fast-glob": "^2.2.7",
