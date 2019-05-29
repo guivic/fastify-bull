@@ -45,7 +45,7 @@ function fastifyBull(fastify, options, next) {
 			case 'subscriber':
 				return subscriber;
 			default:
-				return new Redis();
+				return new Redis(options.redisUrl);
 			}
 		},
 	};
