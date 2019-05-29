@@ -37,15 +37,12 @@ function fastifyBull(fastify, options, next) {
 	const client = new Redis(options.redisUrl);
 	const subscriber = new Redis(options.redisUrl);
 
-	const queueDefaultOptions = {
+	const redisOptions = {
 		createClient(type) {
 			switch (type) {
-			case 'client':
-				return client;
-			case 'subscriber':
-				return subscriber;
-			default:
-				return new Redis(options.redisUrl);
+			case 'client': return client;
+			case 'subscriber': return subscriber;
+			default: return new Redis(options.redisUrl);
 			}
 		},
 	};
@@ -63,8 +60,11 @@ function fastifyBull(fastify, options, next) {
 
 		queues[queueName] = new Queue(
 			queueConfig.name,
-			queueConfig.url || options.url,
-			queueConfig.options || queueDefaultOptions,
+			{
+				redis: {
+					opts: redisOptions,
+				},
+			},
 		);
 
 		queues[queueName].process((job) => queueConfig.handler(fastify, job));
