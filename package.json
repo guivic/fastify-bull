@@ -1,6 +1,6 @@
 {
   "name": "@guivic/fastify-bull",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Fastify plugin to use easily Bull.",
   "main": "index.js",
   "repository": "git@github.com:guivic/fastify-bull.git",
