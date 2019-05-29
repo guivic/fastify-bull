@@ -37,7 +37,7 @@ function fastifyBull(fastify, options, next) {
 	const client = new Redis(options.redisUrl);
 	const subscriber = new Redis(options.redisUrl);
 
-	const redisOptions = {
+	const queueOptions = {
 		createClient(type) {
 			switch (type) {
 			case 'client': return client;
@@ -60,11 +60,7 @@ function fastifyBull(fastify, options, next) {
 
 		queues[queueName] = new Queue(
 			queueConfig.name,
-			{
-				redis: {
-					opts: redisOptions,
-				},
-			},
+			queueOptions,
 		);
 
 		queues[queueName].process((job) => queueConfig.handler(fastify, job));
