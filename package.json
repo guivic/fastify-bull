@@ -1,21 +1,26 @@
 {
   "name": "fastify-bull",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Fastify plugin to use easily Bull.",
   "main": "index.js",
   "repository": "git@github.com:https://github.com/jerrythomas/fastify-bull.git",
   "author": "Jerry Thomas <me@jerrythomas.name>",
   "license": "MIT",
+  "scripts": {
+    "test": "NODE_ENV=test tap",
+    "lint": "eslint --ignore-path .gitignore ."
+  },
   "devDependencies": {
-    "@guivic/eslint-config-guivic": "^0.2.0",
+    "@types/bull": "^3.12.2",
     "eslint": "^6.8.0",
     "fastify": "^2.3.0",
-    "tap": "^14.10.7"
+    "lint": "^0.7.0",
+    "tap": "^14.10.7",
+    "fastify-redis": "^3.1.1"
   },
   "dependencies": {
-    "bull": "^3.9.1",
-    "fastify-plugin": "^1.5.0",
-    "ioredis": "^4.9.5"
+    "bull": "^3.13.0",
+    "fastify-plugin": "^1.5.0"
   },
   "keywords": [
     "fastify",
@@ -23,6 +28,6 @@
     "queue"
   ],
   "peerDependencies": {
-    "bull": "^3.9.1"
+    "fastify-redis": "^3.1.1"
   }
 }

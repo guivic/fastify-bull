@@ -20,14 +20,12 @@ yarn add fastify-bull
 
 An example queue handler.
 
-```ts
-// Queues/my-queue/index.ts
-import {FastifyInstance} from 'fastify';
-import {Job, DoneCallback} from 'bull';
+```js
+// queues/my-queue/index.js
 
 export const name = 'my-queue';
 
-export async function handler(server:FastifyInstance, job: Job<any>, done: DoneCallback){
+export async function handler(server, job, done){
   /* queue processing logic here */
   done()
 }
@@ -35,16 +33,17 @@ export async function handler(server:FastifyInstance, job: Job<any>, done: DoneC
 
 ### Adding to fastify
 
-```ts
+* Supports fastify-redis
+* Alternatively pass redis connection in options
+
+```js
 import fastify from "fastify";
 import { Server, IncomingMessage, ServerResponse } from "http";
 
 const server: fastify.FastifyInstance<Server, IncomingMessage, ServerResponse> = fastify({logger:true});
 
-server.register(require('fastify-bull'), {
-  path:'queues',
-  redisUrl: process.env.REDIS_URL
-})
+server.register(require('fastify-redis'))
+server.register(require('fastify-bull'))
 
 const start = async () => {
   try {
@@ -80,6 +79,7 @@ fastify.queues['my-queue'].add({data:'some data'})
 
 * path: specify folder where queue handlers are present. Exclude to use the default folder 'queues'
 * prefix: Prefix folders to scan for the 'queues'. Default is ['.', 'dist', 'src'].
+* connection: Provide connection to Redis. Default assumes that fastify-redis has been registered. 
 
 ## Author
 Jerry Thomas

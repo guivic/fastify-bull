@@ -2,7 +2,6 @@ const fastifyPlugin = require('fastify-plugin');
 const fs = require('fs');
 const path = require('path');
 const Queue = require('bull');
-const Redis = require('ioredis');
 
 /**
  * Walk folder path to find queue handlers
@@ -10,12 +9,13 @@ const Redis = require('ioredis');
  * @param {String} handlerPath - Folder containing the queue handlers
  * @param {String} filter - Filter condition to restrict the types of files
  */
-function walk(handlerPath, filter='js$') {
+function walk(handlerPath, filter) {
   let filepaths = []
+  let files = fs.readdirSync(handlerPath);
+  filter = filter || '[js|ts]$'
 
-  const files = fs.readdirSync(handlerPath);
   for (let filename of files) {
-    const filepath = path.join(handlerPath, filename);
+    let filepath = path.join(handlerPath, filename);
     let ext = path.extname(filename)
 
     if (fs.statSync(filepath).isDirectory()) {
@@ -38,12 +38,13 @@ function findQueueFiles(fastify, options){
   let handlerPaths = []
 
   options.prefix.forEach(prefix => {
-    handlerPath = path.resolve(`${prefix}/${options.path}`)
+    let handlerPath = path.resolve(`${prefix}/${options.path}`)
     if (fs.existsSync(handlerPath) && fs.lstatSync(handlerPath).isDirectory()){
       handlerPaths.push(handlerPath);
     }
   })
   if (handlerPaths.length > 0){
+    //console.log(handlerPaths)
     return walk(handlerPaths[0])
   }
   return []
@@ -81,19 +82,6 @@ function fastifyBull(fastify, options, next) {
 
   const files = findQueueFiles(fastify, options);
   const queues = {};
-  const client = new Redis(options.redisUrl);
-  const subscriber = new Redis(options.redisUrl);
-
-  //console.log(walk(options.paths))
-  const queueOptions = {
-    createClient(type) {
-      switch (type) {
-      case 'client': return client;
-      case 'subscriber': return subscriber;
-      default: return new Redis(options.redisUrl);
-      }
-    },
-  };
 
   if (!options.onFailed) {
     options.onFailed = defaultOnFailed;
@@ -103,16 +91,11 @@ function fastifyBull(fastify, options, next) {
 
   for (let i = 0; i < files.length; i++) {
     const queueConfig = require(path.resolve(files[i]));
-    const filename = path.basename(files[i]);
     const queueName = queueConfig.name;
+    const connection = fastify.redis || options.connection ;
 
-    queues[queueName] = new Queue(
-      queueConfig.name,
-      queueOptions,
-    );
-
+    queues[queueName] = new Queue(queueName,{ connection });
     queues[queueName].process((job) => queueConfig.handler(fastify, job));
-
     queues[queueName].on('error', (error) => options.onError(fastify, error));
     queues[queueName].on('failed', (error) => options.onFailed(fastify, error));
   }
