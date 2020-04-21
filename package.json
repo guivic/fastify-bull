@@ -1,6 +1,6 @@
 {
   "name": "fastify-bull",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Fastify plugin to use easily Bull.",
   "main": "index.js",
   "repository": "git@github.com:https://github.com/jerrythomas/fastify-bull.git",

@@ -43,6 +43,7 @@ function findQueueFiles(fastify, options){
       handlerPaths.push(handlerPath);
     }
   })
+  
   if (handlerPaths.length > 0){
     //console.log(handlerPaths)
     return walk(handlerPaths[0])
@@ -91,13 +92,21 @@ function fastifyBull(fastify, options, next) {
 
   for (let i = 0; i < files.length; i++) {
     const queueConfig = require(path.resolve(files[i]));
-    const queueName = queueConfig.name;
-    const connection = fastify.redis || options.connection ;
 
-    queues[queueName] = new Queue(queueName,{ connection });
-    queues[queueName].process((job) => queueConfig.handler(fastify, job));
-    queues[queueName].on('error', (error) => options.onError(fastify, error));
-    queues[queueName].on('failed', (error) => options.onFailed(fastify, error));
+    if (queueConfig.name && queueConfig.handler){
+      const queueName = queueConfig.name;
+      const connection = fastify.redis || options.connection ;
+
+      queues[queueName] = new Queue(queueName, {connection} );
+      queues[queueName].process((job) => queueConfig.handler(fastify, job));
+      queues[queueName].on('error', (error) => options.onError(fastify, error));
+      queues[queueName].on('failed', (error) => options.onFailed(fastify, error));
+    } else {
+      if (!queueConfig.name)
+         fastify.log.error({file: files[i], msg: "Queue worker must export 'name'"});
+      if (!queueConfig.handler)
+         fastify.log.error({file: files[i], msg: "Queue worker must export 'handler'"});
+    }
   }
 
   fastify.decorate('queues', queues);
