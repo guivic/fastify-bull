@@ -57,7 +57,9 @@ function findQueueFiles(fastify, options){
  * @param {Object} error - The Bull error
  */
 function defaultOnFailed(fastify, error) {
-  fastify.log.error(`${error.queue.name}`);
+  if(error.hasOwnProperty('queue')) {
+    fastify.log.error(`${error.queue.name}`);
+  }
   fastify.log.error(error);
 }
 
