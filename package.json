@@ -20,7 +20,7 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "fast-glob": "^2.2.7",
+    "fast-glob": "^3.2.4",
     "fastify-plugin": "^2.3.3",
     "ioredis": "^4.9.5"
   },
