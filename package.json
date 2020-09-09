@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "fast-glob": "^2.2.7",
-    "fastify-plugin": "^1.5.0",
+    "fastify-plugin": "^2.3.3",
     "ioredis": "^4.9.5"
   },
   "ava": {
