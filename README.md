@@ -74,6 +74,8 @@ fastify.queues['my-queue'].add({ data: 'some data' });
 
 * `paths: <String | Array>`  specify folder where queue handlers are present.
 * `redisUrl: <String>` The Redis url connection.
+* `onFailed: <Function>` Queue handler on "failed" event (by default will log with the fastify logger)
+* `onError: <Function>` Queue handler on "error" event (by default will log with the fastify logger)
 
 ## Informations
 
