@@ -58,15 +58,17 @@ function fastifyBull(fastify, options, next) {
 		const filename = path.basename(files[i]);
 		const queueName = filename.split('.')[0];
 
-		queues[queueName] = new Queue(
-			queueConfig.name,
-			queueOptions,
-		);
+		if (queueName && queueConfig.name && queueConfig.handler) {
+			queues[queueName] = new Queue(
+				queueConfig.name,
+				queueOptions,
+			);
 
-		queues[queueName].process((job) => queueConfig.handler(fastify, job));
+			queues[queueName].process((job) => queueConfig.handler(fastify, job));
 
-		queues[queueName].on('error', (error) => options.onError(fastify, error));
-		queues[queueName].on('failed', (error) => options.onFailed(fastify, error));
+			queues[queueName].on('error', (error) => options.onError(fastify, error));
+			queues[queueName].on('failed', (error) => options.onFailed(fastify, error));
+		}
 	}
 
 	fastify.decorate('queues', queues);

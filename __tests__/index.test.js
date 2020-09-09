@@ -10,7 +10,7 @@ const plugin = require('../index');
  */
 function createQueueHandler(dir = 'queues', name = 'test') {
 	const code = [
-		`module.export = {
+		`module.exports = {
 			name: '${name}',
 			handler(fastify, job, done) {
 				done();
