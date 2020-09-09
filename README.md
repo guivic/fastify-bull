@@ -81,7 +81,7 @@ fastify.queues['my-queue'].add({ data: 'some data' });
 
 ### Bull and Heroku
 
-I use [ioredis](https://github.com/luin/ioredis) for the Redis conneciton. It's preconfigured to share the Redis connection accros queues. It's really usefull on environment like Heroku where you have connection limits.
+I use [ioredis](https://github.com/luin/ioredis) for the Redis conneciton. It's preconfigured to share the Redis connection across queues. It's really usefull on environment like Heroku where you have connection limits.
 
 ## Author
 
