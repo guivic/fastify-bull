@@ -91,6 +91,7 @@ Thanks to [Jerry Thomas](https://github.com/jerrythomas) for his fork
 
 ## TODO
 
+- Add the Typescript typings
 - Add the support of fastify-redis
 - Add the support of Redis connection Object as options
 - Find a way to let people configure the way bull will handle the redis connection
