@@ -15,6 +15,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Start Redis 5
+        uses: supercharge/redis-github-action@1.1.0
+        with:
+            redis-version: 5
       - run: yarn install --frozen-lockfile
       - run: npm test
 
