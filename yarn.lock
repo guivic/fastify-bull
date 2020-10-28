@@ -568,9 +568,9 @@ buffer-from@^1.0.0:
   integrity sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==
 
 bull@^3.9.1:
-  version "3.18.0"
-  resolved "https://registry.yarnpkg.com/bull/-/bull-3.18.0.tgz#7d7730c8ab0975ea9ee4e74f6f85bd731c3526cb"
-  integrity sha512-nE/BKlg1dnJ/AcOy5D1nzthcmpAKqpUVXzQ43mJfnVC8ZM7mi4ZzP3spN7745UuikzmGGsbTe9px2TbEKhR+DQ==
+  version "3.18.1"
+  resolved "https://registry.yarnpkg.com/bull/-/bull-3.18.1.tgz#49eb8fd9844a3dc0a12a851b132e508890763a31"
+  integrity sha512-g3gHFZ0qMo0wpecoNmd2W+F1Gj48l6phVCTdsQPKxDk1bB7kzD0nY5FAFnBFiaWxNmh5lb5X9TMB64uNXFKFDg==
   dependencies:
     cron-parser "^2.13.0"
     debuglog "^1.0.0"
